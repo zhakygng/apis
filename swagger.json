@@ -5,7 +5,7 @@
     "version" : "1.0.0",
     "title" : "Enterprise API",
     "contact" : {
-      "email" : "zhaky.gng@gmail.com"
+      "email" : "zhaky.hadi@btpn.com"
     }
   },
   "consumes" : [ "application/json" ],
