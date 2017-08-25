@@ -5,6 +5,8 @@
     "version" : "1.0.0",
     "title" : "Enterprise API",
     "contact" : {
+      "name" : "Joko Kurniawan",
+      "url" : "",
       "email" : "zhaky.hadi@btpn.com"
     }
   },
@@ -13,7 +15,7 @@
   "paths" : {
     "/accounts/" : {
       "post" : {
-        "summary" : "create new account",
+        "summary" : "create new EQ account",
         "parameters" : [ ],
         "responses" : {
           "200" : {
