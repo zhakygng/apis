@@ -15,7 +15,7 @@
   "paths" : {
     "/accounts/" : {
       "post" : {
-        "summary" : "create new EQ account",
+        "summary" : "create new account",
         "parameters" : [ ],
         "responses" : {
           "200" : {
@@ -43,8 +43,16 @@
           }
         }
       },
-      "delete" : {
-        "summary" : "delete account by account-no",
+      "parameters" : [ {
+        "name" : "account-no",
+        "in" : "path",
+        "required" : true,
+        "type" : "string"
+      } ]
+    },
+    "/accounts/{account-no}/close" : {
+      "post" : {
+        "summary" : "Close account by account-no",
         "parameters" : [ ],
         "responses" : {
           "200" : {
@@ -77,43 +85,8 @@
       } ]
     },
     "/accounts/{account-no}/status" : {
-      "get" : {
-        "summary" : "get account status",
-        "parameters" : [ ],
-        "responses" : {
-          "200" : {
-            "description" : "Status 200"
-          }
-        }
-      },
       "put" : {
-        "summary" : "update account status",
-        "parameters" : [ ],
-        "responses" : {
-          "200" : {
-            "description" : "Status 200"
-          }
-        }
-      },
-      "parameters" : [ {
-        "name" : "account-no",
-        "in" : "path",
-        "required" : true,
-        "type" : "string"
-      } ]
-    },
-    "/accounts/{account-no}/limit" : {
-      "get" : {
-        "summary" : "get account limit",
-        "parameters" : [ ],
-        "responses" : {
-          "200" : {
-            "description" : "Status 200"
-          }
-        }
-      },
-      "put" : {
-        "summary" : "update account limit",
+        "summary" : "update account status from semi-active to fully-active",
         "parameters" : [ ],
         "responses" : {
           "200" : {
@@ -138,6 +111,15 @@
           }
         }
       },
+      "parameters" : [ {
+        "name" : "account-no",
+        "in" : "path",
+        "required" : true,
+        "type" : "string"
+      } ]
+    },
+    "/accounts-pb/" : { },
+    "/accounts-pb/{account-no}" : {
       "parameters" : [ {
         "name" : "account-no",
         "in" : "path",
