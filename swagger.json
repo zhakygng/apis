@@ -16,10 +16,39 @@
     "/accounts/" : {
       "post" : {
         "summary" : "create new account",
-        "parameters" : [ ],
+        "consumes" : [ ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Account Creation"
+          }
+        } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200"
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "ACCN" : {
+                  "type" : "string",
+                  "description" : "Internal Account Number",
+                  "maxLength" : 13
+                },
+                "EAN" : {
+                  "type" : "string",
+                  "description" : "External Account Number",
+                  "maxLength" : 20
+                },
+                "OAD" : {
+                  "type" : "string",
+                  "description" : "Date Account Opened",
+                  "maxLength" : 8,
+                  "example" : "yyyymmdd"
+                }
+              }
+            }
           }
         }
       }
@@ -27,10 +56,20 @@
     "/accounts/{account-no}" : {
       "get" : {
         "summary" : "get account by account-no",
-        "parameters" : [ ],
+        "parameters" : [ {
+          "name" : "USID",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "description" : "User ID",
+          "maxLength" : 4
+        } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200"
+            "description" : "Status 200",
+            "schema" : {
+              "$ref" : "#/definitions/Accounts Info"
+            }
           }
         }
       },
@@ -53,10 +92,27 @@
     "/accounts/{account-no}/close" : {
       "post" : {
         "summary" : "Close account by account-no",
-        "parameters" : [ ],
+        "consumes" : [ ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Close Account"
+          }
+        } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200"
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "Status" : {
+                  "type" : "string",
+                  "description" : "berhasil atau gagal"
+                }
+              }
+            }
           }
         }
       },
@@ -581,6 +637,574 @@
         "required" : true,
         "type" : "string"
       } ]
+    }
+  },
+  "definitions" : {
+    "Accounts Info" : {
+      "type" : "object",
+      "properties" : {
+        "ACC1" : {
+          "type" : "string",
+          "description" : "Internal Acc - Right Padded Spaces"
+        },
+        "ACC2" : {
+          "type" : "string",
+          "description" : "Ext Acc - Right Padded Spaces"
+        },
+        "CUN" : {
+          "type" : "string",
+          "description" : "Fullname - Right Padded Spaces"
+        },
+        "CCY" : {
+          "type" : "string",
+          "description" : "Currency - Right Padded Spaces"
+        },
+        "XABAL" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "ABAL" : {
+          "type" : "number",
+          "description" : "Current available ba - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XLBAL" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "LBAL" : {
+          "type" : "number",
+          "description" : "Ledger balance - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XLBALEQ" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "LBALEQ" : {
+          "type" : "number",
+          "description" : "Ledger balance equiv - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XCTBAL" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "CTBAL" : {
+          "type" : "number",
+          "description" : "Clearing today - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XLOBAL" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "LOBAL" : {
+          "type" : "number",
+          "description" : "Local cheque - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XCNBAL" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "CNBAL" : {
+          "type" : "number",
+          "description" : "Clearing NBD - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XCABAL" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "CABAL" : {
+          "type" : "number",
+          "description" : "Clearing After - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XSUMD" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "SUMD" : {
+          "type" : "number",
+          "description" : "Shadow debit - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XSUMC" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "SUMC" : {
+          "type" : "number",
+          "description" : "Shadow credit - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XRBA" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "RBA" : {
+          "type" : "number",
+          "description" : "Reserved balance - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XODL" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "ODL" : {
+          "type" : "number",
+          "description" : "Min credit bal - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "LED" : {
+          "type" : "string",
+          "description" : "Limit expiry date - yyyymmdd"
+        },
+        "NA1" : {
+          "type" : "string",
+          "description" : "Address line 1 - Right Padded Spaces"
+        },
+        "NA2" : {
+          "type" : "string",
+          "description" : "Address line 2 - Right Padded Spaces"
+        },
+        "NA3" : {
+          "type" : "string",
+          "description" : "Address line 3 - Right Padded Spaces"
+        },
+        "NA4" : {
+          "type" : "string",
+          "description" : "Address line 4 - Right Padded Spaces"
+        },
+        "NA5" : {
+          "type" : "string",
+          "description" : "Address line 5 - Right Padded Spaces"
+        },
+        "RATD" : {
+          "type" : "number",
+          "description" : "Debit rate - -Left Padded Zeroes",
+          "maximum" : 11
+        },
+        "XAM1D" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "AM1D" : {
+          "type" : "number",
+          "description" : "Accrue up to today - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XAIMD" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "AIMD" : {
+          "type" : "number",
+          "description" : "Interest Adjustment - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XTAXD1" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "TAXD1" : {
+          "type" : "number",
+          "description" : "Tax 1 - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XTAXD2" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "TAXD2" : {
+          "type" : "number",
+          "description" : "Tax 2 - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XNETD" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "NETD" : {
+          "type" : "number",
+          "description" : "Net interest - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "IDBD" : {
+          "type" : "string",
+          "description" : "IDB - D / C"
+        },
+        "IFQD" : {
+          "type" : "string",
+          "description" : "Interest frequency - Right Padded Spaces"
+        },
+        "NCDD" : {
+          "type" : "string",
+          "description" : "Next interest date - yyyymmdd"
+        },
+        "TRCD" : {
+          "type" : "string",
+          "description" : "Tiering code - Right Padded Spaces"
+        },
+        "BRRD" : {
+          "type" : "string",
+          "description" : "Debit base rate - Right Padded Spaces"
+        },
+        "DRRD" : {
+          "type" : "string",
+          "description" : "Debit differential - Right Padded Spaces"
+        },
+        "CRD1" : {
+          "type" : "string",
+          "description" : "Tax ref 1 - Right Padded Spaces"
+        },
+        "CRD2" : {
+          "type" : "string",
+          "description" : "Tax ref 2 - Right Padded Spaces"
+        },
+        "RATC" : {
+          "type" : "number",
+          "description" : "Debit rate - -Left Padded Zeroes",
+          "maximum" : 11
+        },
+        "XAM1C" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "AM1C" : {
+          "type" : "number",
+          "description" : "Accrue up to today - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XAIMC" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "AIMC" : {
+          "type" : "number",
+          "description" : "Interest Adjustment - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XTAXC1" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "TAXC1" : {
+          "type" : "number",
+          "description" : "Tax 1 - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XTAXC2" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "TAXC2" : {
+          "type" : "number",
+          "description" : "Tax 2 - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "XNETC" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "NETC" : {
+          "type" : "number",
+          "description" : "Net interest - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "IDBC" : {
+          "type" : "string",
+          "description" : "IDB - Right Padded Spaces"
+        },
+        "IFQC" : {
+          "type" : "string",
+          "description" : "Interest frequency - Right Padded Spaces"
+        },
+        "NCDC" : {
+          "type" : "string",
+          "description" : "Next interest date - yyyymmdd"
+        },
+        "TRCC" : {
+          "type" : "string",
+          "description" : "Tiering code - Right Padded Spaces"
+        },
+        "BRRC" : {
+          "type" : "string",
+          "description" : "Credit base rate - Right Padded Spaces"
+        },
+        "DRRC" : {
+          "type" : "string",
+          "description" : "Credit differential - Right Padded Spaces"
+        },
+        "CRC1" : {
+          "type" : "string",
+          "description" : "Tax ref 1 - Right Padded Spaces"
+        },
+        "CRC2" : {
+          "type" : "string",
+          "description" : "Tax ref 2 - Right Padded Spaces"
+        },
+        "ACS" : {
+          "type" : "string",
+          "description" : "Account structure - M (movement), T (term), X (foreign exchange dealing account)"
+        },
+        "CUS" : {
+          "type" : "string",
+          "description" : "Customer - Right Padded Spaces"
+        },
+        "CLC" : {
+          "type" : "string",
+          "description" : "Customer location - Right Padded Spaces"
+        },
+        "CTP" : {
+          "type" : "string",
+          "description" : "Customer type - Right Padded Spaces"
+        },
+        "ACO" : {
+          "type" : "string",
+          "description" : "Account officer - Right Padded Spaces"
+        },
+        "CNAL" : {
+          "type" : "string",
+          "description" : "Resident - Right Padded Spaces"
+        },
+        "CNAR" : {
+          "type" : "string",
+          "description" : "Risk country - Right Padded Spaces"
+        },
+        "CNAI" : {
+          "type" : "string",
+          "description" : "Internal risk country - Right Padded Spaces"
+        },
+        "LNM" : {
+          "type" : "string",
+          "description" : "Language mnemonic - Right Padded Spaces"
+        },
+        "XBALS" : {
+          "type" : "string",
+          "description" : "Sign - D / C"
+        },
+        "BALS" : {
+          "type" : "number",
+          "description" : "Last statement bal - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "STML" : {
+          "type" : "string",
+          "description" : "Last statement date - yyyymmdd"
+        },
+        "SFC" : {
+          "type" : "string",
+          "description" : "Statement freq - Right Padded Spaces"
+        },
+        "STNL" : {
+          "type" : "number",
+          "description" : "Statement number - Right Padded Spaces",
+          "maximum" : 2
+        },
+        "OAD" : {
+          "type" : "string",
+          "description" : "Account open date - yyyymmdd"
+        },
+        "DLE" : {
+          "type" : "string",
+          "description" : "Date last entry - yyyymmdd"
+        },
+        "LDTD" : {
+          "type" : "string",
+          "description" : "Date last debit - yyyymmdd"
+        },
+        "LCTD" : {
+          "type" : "string",
+          "description" : "Date last credit - yyyymmdd"
+        },
+        "DLM" : {
+          "type" : "string",
+          "description" : "Date last maintained - yyyymmdd"
+        },
+        "C1R" : {
+          "type" : "string",
+          "description" : "C1 User code - Right Padded Spaces"
+        },
+        "C2R" : {
+          "type" : "string",
+          "description" : "C2 User code - Right Padded Spaces"
+        },
+        "C3R" : {
+          "type" : "string",
+          "description" : "C3 User code - Right Padded Spaces"
+        },
+        "C4R" : {
+          "type" : "string",
+          "description" : "C4 User code - Right Padded Spaces"
+        },
+        "C5R" : {
+          "type" : "string",
+          "description" : "C5 User code - Right Padded Spaces"
+        },
+        "P1R" : {
+          "type" : "string",
+          "description" : "P1 User code - Right Padded Spaces"
+        },
+        "P2R" : {
+          "type" : "string",
+          "description" : "P2 User code - Right Padded Spaces"
+        },
+        "P3R" : {
+          "type" : "string",
+          "description" : "P3 User code - Right Padded Spaces"
+        },
+        "P4R" : {
+          "type" : "string",
+          "description" : "P4 User code - Right Padded Spaces"
+        },
+        "P5R" : {
+          "type" : "string",
+          "description" : "P5 User code - Right Padded Spaces"
+        },
+        "RETP" : {
+          "type" : "string",
+          "description" : "Retention period - Right Padded Spaces"
+        },
+        "CAD" : {
+          "type" : "string",
+          "description" : "Closing account date - yyyymmdd"
+        },
+        "SC" : {
+          "type" : "string",
+          "description" : "Special Conditions - Right Padded Spaces"
+        }
+      }
+    },
+    "Account Creation" : {
+      "type" : "object",
+      "required" : [ "ACTP", "AMT", "BRNM", "CCY", "CUS", "DATA", "FLG", "JAC", "Operator", "RCV1", "RCV2", "RCV3", "TERM" ],
+      "properties" : {
+        "Operator" : {
+          "type" : "string",
+          "description" : "Operator FES - Right Padded Spaces"
+        },
+        "BRNM" : {
+          "type" : "string",
+          "description" : "Branch  - Right Padded Spaces"
+        },
+        "CUS" : {
+          "type" : "string",
+          "description" : "CIF - Right Padded Spaces"
+        },
+        "CLC" : {
+          "type" : "string",
+          "description" : "Customer location - Right Padded Spaces"
+        },
+        "SFX" : {
+          "type" : "string",
+          "description" : "Suffix - Right Padded Spaces"
+        },
+        "SHN" : {
+          "type" : "string",
+          "description" : "Account Shortname - Right Padded Spaces"
+        },
+        "ACTP" : {
+          "type" : "string",
+          "description" : "Account Type - Right Padded Spaces"
+        },
+        "CCY" : {
+          "type" : "string",
+          "description" : "Currency - Right Padded Spaces"
+        },
+        "JAC" : {
+          "type" : "string",
+          "description" : "Joint Account - Y/N"
+        },
+        "OAD" : {
+          "type" : "number",
+          "description" : "Open Account Date - YYYYMMDD",
+          "maximum" : 8
+        },
+        "EAN" : {
+          "type" : "string",
+          "description" : "External Account Number - Right Padded Spaces"
+        },
+        "TERM" : {
+          "type" : "number",
+          "description" : "Jangka waktu - Left Padded Zeros, Mandatory if ACTP = 'EP'",
+          "maximum" : 3
+        },
+        "AMT" : {
+          "type" : "number",
+          "description" : "Jumlah setoran bulanan - Left Padded Zeros, Mandatory if ACTP = 'EP' ",
+          "maximum" : 18
+        },
+        "FLG" : {
+          "type" : "string",
+          "description" : "Flag Jenis Rekening Penerima - Mandatory If ACTP = 'EP' (1 : BTPN account, 2 : Others Bank Account)"
+        },
+        "RCV1" : {
+          "type" : "string",
+          "description" : "Rekening Penerima - Mandatory If ACTP = 'EP'"
+        },
+        "RCV2" : {
+          "type" : "string",
+          "description" : "Nama Penerima - Mandatory If ACTP = 'EP' and FLG = '2'"
+        },
+        "RCV3" : {
+          "type" : "string",
+          "description" : "Bank dan Cabang Penerima - Mandatory If ACTP = 'EP' and FLG = '2'"
+        },
+        "DATA" : {
+          "type" : "string",
+          "description" : "Additional Info Data - Sesuaikan dengan DS Additional Info."
+        }
+      }
+    },
+    "Close Account" : {
+      "type" : "object",
+      "required" : [ "ACC", "CR", "RCHG", "SR", "USID" ],
+      "properties" : {
+        "USID" : {
+          "type" : "string",
+          "description" : "User ID - Right Padded Spaces"
+        },
+        "ACC" : {
+          "type" : "string",
+          "description" : "Account - Right Padded Spaces"
+        },
+        "DTC" : {
+          "type" : "string",
+          "description" : "DR Trans Code - Right Padded Spaces"
+        },
+        "CTC" : {
+          "type" : "string",
+          "description" : "CR Trans Code - Right Padded Spaces"
+        },
+        "SR" : {
+          "type" : "string",
+          "description" : "Statement required - Y / N"
+        },
+        "CR" : {
+          "type" : "string",
+          "description" : "Confirm. required - Y / N"
+        },
+        "CC" : {
+          "type" : "string",
+          "description" : "Charge Code - Right Padded Spaces"
+        },
+        "CAMT" : {
+          "type" : "number",
+          "description" : "Amount Charge - -Left Padded Zeroes",
+          "maximum" : 18
+        },
+        "ACCHG" : {
+          "type" : "string",
+          "description" : "Account Charge - Right Padded Spaces"
+        },
+        "RCHG" : {
+          "type" : "string",
+          "description" : "Recalculate Charge - Y / N"
+        }
+      }
     }
   }
 }
