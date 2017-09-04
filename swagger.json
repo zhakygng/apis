@@ -16,6 +16,7 @@
     "/accounts/" : {
       "post" : {
         "summary" : "create new account",
+        "description" : "**Create new account**\n----------------------------------\n\nService ini untuk create new account berdasarkan menu YOP ( OCA + AIM).\nData yang dikembalikan adalah norek internal, norek eksternal, tanggal pembukaan rekening.\n\n- Nama Program : YGTWYOP0R\n- ProCode : 640036\n\n**Request Fields**\n\n> No|Field|Description|awal|akhir|Type|Size|Dec|M/O|Format\n> --|----|-------------|---|-----|----|----|---|------|-----\n> 1|Operator|Operator FES|1|4|A|4||M|Right Padded Spaces\n> 2|BRNM|Branch |5|8|A|4||M|Right Padded Spaces\n> 3|CUS|CIF|9|14|A|6||M|Right Padded Spaces\n> 4|CLC|Customer location|15|17|A|3||O|Right Padded Spaces\n> 5|SFX|Suffix|18|20|A|3||O|Right Padded Spaces\n> 6|SHN|Account Shortname|21|35|A|15||O|Right Padded Spaces\n> 7|ACTP|Account Type|36|37|A|2||M|Right Padded Spaces\n> 8|CCY|Currency|38|40|A|3||M|Right Padded Spaces\n> 9|JAC|Joint Account|41|41|A|1||M|Y/N\n> 10|OAD|Open Account Date|42|49|N|8||O|YYYYMMDD\n> 11|EAN|External Account Number|50|69|A|20||O|Right Padded Spaces\n> 12|TERM|Jangka waktu|70|72|N|3||M|Left Padded Zeros\n> 13|AMT|Jumlah setoran bulanan|73|90|N|18|3|M|Left Padded Zeros\n> 14|FLG|Flag Jenis Rekening Penerima|91|91|A|1||M|Mandatory If ACTP = 'EP' (1 : BTPN account, 2 : Others Bank Account)\n> 15|RCV1|Rekening Penerima|92|126|A|35||M|Mandatory If ACTP = 'EP'\n> 16|RCV2|Nama Penerima|127|161|A|35||M|Mandatory If ACTP = 'EP' and FLG = '2'\n> 17|RCV3|Bank dan Cabang Penerima|162|196|A|35||M|Mandatory If ACTP = > 'EP' and FLG = '2'\n> 18|DATA|Additional Info Data|197|2471|A|2275||M|Sesuaikan dengan DS Additional Info. Panjang dan value dinamis sesuai additional information item masing-masing tipe rekening.\n\n\n**Response Fields**\n\n> No|Field|Description|awal|akhir|Type|Size|Dec|Format\n> --|----|--------|---|---|-----|----|----|----|------\n> 1|ACCN|Internal Account Number|1|13|A|13||Right Padded Spaces\n> 2|EAN|External Account Number|14|33|A|20||Right Padded Spaces\n> 3|OAD|Date Account Opened|34|41|A|8||yyyymmdd\n\n",
         "consumes" : [ ],
         "parameters" : [ {
           "name" : "body",
@@ -56,6 +57,7 @@
     "/accounts/{account-no}" : {
       "get" : {
         "summary" : "get account by account-no",
+        "description" : "**Get Account by account-no**\n----------------------------------\n\nService ini untuk inquiry data rekening.\nData yang dikembalikan adalah data rekening mulai dari basic data, balance, dan juga special conditions.\n\n- Nama Program : YGTWAE00R\n- ProCode : 640039\n\n**Request Fields**\n\n> No|Field|Description|awal|akhir|Type|Size|Dec|M/O|Format\n> --|---|------------|-----|-----|----|----|---|----|-----\n> 1|USID|User ID|1|4|A|4||M|Right Padded Spaces\n> 2|ACCN|Account Number|5|24|A|20||M|Right Padded Spaces\n\n\n**Response Fields**\n\n> No|Field|Description|awal|akhir|Type|Size|Dec|Format\n> --|----|--------|---|---|-----|----|----|----|------\n> 1|ACC1|Internal Acc|1|13|A|13| |Right Padded Spaces\n> 2|ACC2|Ext Acc|14|33|A|20| |Right Padded Spaces\n> 3|CUN|Fullname|34|68|A|35| |Right Padded Spaces\n> 4|CCY|Currency|69|71|A|3| |Right Padded Spaces\n> 5|XABAL|Sign|72|72|A|1| |D / C\n> 6|ABAL|Current available ba|73|90|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 7|XLBAL|Sign|91|91|A|1| |D / C\n> 8|LBAL|Ledger balance|92|109|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 9|XLBALEQ|Sign|110|110|A|1| |D / C\n> 10|LBALEQ|Ledger balance equiv|111|128|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 11|XCTBAL|Sign|129|129|A|1| |D / C\n> 12|CTBAL|Clearing today|130|147|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 13|XLOBAL|Sign|148|148|A|1| |D / C\n> 14|LOBAL|Local cheque|149|166|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 15|XCNBAL|Sign|167|167|A|1| |D / C\n> 16|CNBAL|Clearing NBD|168|185|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 17|XCABAL|Sign|186|186|A|1| |D / C\n> 18|CABAL|Clearing After|187|204|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 19|XSUMD|Sign|205|205|A|1| |D / C\n> 20|SUMD|Shadow debit|206|223|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 21|XSUMC|Sign|224|224|A|1| |D / C\n> 22|SUMC|Shadow credit|225|242|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 23|XRBA|Sign|243|243|A|1| |D / C\n> 24|RBA|Reserved balance|244|261|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 25|XODL|Sign|262|262|A|1| |D / C\n> 26|ODL|Min credit bal|263|280|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 27|LED|Limit expiry date|281|288|A|8|0|yyyymmdd\n> 28|NA1|Address line 1|289|323|A|35| |Right Padded Spaces\n> 29|NA2|Address line 2|324|358|A|35| |Right Padded Spaces\n> 30|NA3|Address line 3|359|393|A|35| |Right Padded Spaces\n> 31|NA4|Address line 4|394|428|A|35| |Right Padded Spaces\n> 32|NA5|Address line 5|429|463|A|35| |Right Padded Spaces\n> 33|RATD|Debit rate|464|474|N|11|7|-Left Padded Zeroes -7 angka terakhir = desimal\n> 34|XAM1D|Sign|475|475|A|1| |D / C\n> 35|AM1D|Accrue up to today|476|493|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 36|XAIMD|Sign|494|494|A|1| |D / C\n> 37|AIMD|Interest Adjustment|495|512|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 38|XTAXD1|Sign|513|513|A|1| |D / C\n> 39|TAXD1|Tax 1|514|531|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 40|XTAXD2|Sign|532|532|A|1| |D / C\n> 41|TAXD2|Tax 2|533|550|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 42|XNETD|Sign|551|551|A|1| |D / C\n> 43|NETD|Net interest|552|569|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 44|IDBD|IDB|570|570|A|1| |D / C\n> 45|IFQD|Interest frequency|571|573|A|3| |Right Padded Spaces\n> 46|NCDD|Next interest date|574|581|A|8||yyyymmdd\n> 47|TRCD|Tiering code|582|583|A|2| |Right Padded Spaces\n> 48|BRRD|Debit base rate|584|585|A|2| |Right Padded Spaces\n> 49|DRRD|Debit differential|586|587|A|2| |Right Padded Spaces\n> 50|CRD1|Tax ref 1|588|589|A|2| |Right Padded Spaces\n> 51|CRD2|Tax ref 2|590|591|A|2| |Right Padded Spaces\n> 52|RATC|Debit rate|592|602|N|11|7|-Left Padded Zeroes -7 angka terakhir = desimal\n> 53|XAM1C|Sign|603|603|A|1| |D / C\n> 54|AM1C|Accrue up to today|604|621|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 55|XAIMC|Sign|622|622|A|1| |D / C\n> 56|AIMC|Interest Adjustment|623|640|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 57|XTAXC1|Sign|641|641|A|1| |D / C\n> 58|TAXC1|Tax 1|642|659|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 59|XTAXC2|Sign|660|660|A|1| |D / C\n> 60|TAXC2|Tax 2|661|678|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 61|XNETC|Sign|679|679|A|1| |D / C\n> 62|NETC|Net interest|680|697|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 63|IDBC|IDB|698|698|A|1| |Right Padded Spaces\n> 64|IFQC|Interest frequency|699|701|A|3| |Right Padded Spaces\n> 65|NCDC|Next interest date|702|709|A|8||yyyymmdd\n> 66|TRCC|Tiering code|710|711|A|2| |Right Padded Spaces\n> 67|BRRC|Credit base rate|712|713|A|2| |Right Padded Spaces\n> 68|DRRC|Credit differential|714|715|A|2| |Right Padded Spaces\n> 69|CRC1|Tax ref 1|716|717|A|2| |Right Padded Spaces\n> 70|CRC2|Tax ref 2|718|719|A|2| |Right Padded Spaces\n> 71|ACS|Account structure|720|720|A|1| |-M (movement) -T (term) -X (foreign exchange dealing account)\n> 72|CUS|Customer|721|726|A|6| |Right Padded Spaces\n> 73|CLC|Customer location|727|729|A|3| |Right Padded Spaces\n> 74|CTP|Customer type|730|731|A|2| |Right Padded Spaces\n> 75|ACO|Account officer|732|734|A|3| |Right Padded Spaces\n> 76|CNAL|Resident|735|736|A|2| |Right Padded Spaces\n> 77|CNAR|Risk country|737|738|A|2| |Right Padded Spaces\n> 78|CNAI|Internal risk country|739|740|A|2| |Right Padded Spaces\n> 79|LNM|Language mnemonic|741|742|A|2| |Right Padded Spaces\n> 80|XBALS|Sign|743|743|A|1| |D / C\n> 81|BALS|Last statement bal|744|761|N|18|3|-Left Padded Zeroes -3 angka terakhir = desimal\n> 82|STML|Last statement date|762|769|A|8||yyyymmdd\n> 83|SFC|Statement freq|770|772|A|3| |Right Padded Spaces\n> 84|STNL|Statement number|773|774|N|2||Right Padded Spaces\n> 85|OAD|Account open date|775|782|A|8||yyyymmdd\n> 86|DLE|Date last entry|783|790|A|8||yyyymmdd\n> 87|LDTD|Date last debit|791|798|A|8||yyyymmdd\n> 88|LCTD|Date last credit|799|806|A|8||yyyymmdd\n> 89|DLM|Date last maintained|807|814|A|8||yyyymmdd\n> 90|C1R|C1 User code|815|816|A|2| |Right Padded Spaces\n> 91|C2R|C2 User code|817|818|A|2| |Right Padded Spaces\n> 92|C3R|C3 User code|819|820|A|2| |Right Padded Spaces\n> 93|C4R|C4 User code|821|822|A|2| |Right Padded Spaces\n> 94|C5R|C5 User code|823|824|A|2| |Right Padded Spaces\n> 95|P1R|P1 User code|825|827|A|3| |Right Padded Spaces\n> 96|P2R|P2 User code|828|830|A|3| |Right Padded Spaces\n> 97|P3R|P3 User code|831|833|A|3| |Right Padded Spaces\n> 98|P4R|P4 User code|834|836|A|3| |Right Padded Spaces\n> 99|P5R|P5 User code|837|839|A|3| |Right Padded Spaces\n> 100|RETP|Retention period|840|841|A|2||Right Padded Spaces\n> 101|CAD|Closing account date|842|849|A|8||yyyymmdd\n> 102|SC|Special Conditions|850|1033|A|184| |Right Padded Spaces\n\n",
         "parameters" : [ {
           "name" : "USID",
           "in" : "query",
@@ -75,10 +77,34 @@
       },
       "put" : {
         "summary" : "update account by account-no",
-        "parameters" : [ ],
+        "consumes" : [ ],
+        "parameters" : [ {
+          "name" : "USID",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "description" : "User ID",
+          "maxLength" : 4
+        }, {
+          "name" : "body",
+          "in" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Account Creation"
+          }
+        } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200"
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "Status" : {
+                  "type" : "string",
+                  "description" : "Berhasil atau tidak"
+                }
+              }
+            }
           }
         }
       },
@@ -274,10 +300,75 @@
     "/cards/" : {
       "post" : {
         "summary" : "create new card",
-        "parameters" : [ ],
+        "description" : "Service ini untuk membuat kartu baru ",
+        "consumes" : [ ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "required" : true,
+          "schema" : {
+            "type" : "object",
+            "required" : [ "accountNo", "branch", "branchPart", "customerId", "nameOnCard", "personExtId", "productId", "station" ],
+            "properties" : {
+              "commonParam" : {
+                "$ref" : "#/definitions/commonParam"
+              },
+              "branch" : {
+                "type" : "string"
+              },
+              "station" : {
+                "type" : "string"
+              },
+              "accountNo" : {
+                "type" : "string",
+                "description" : "nomor account",
+                "maxLength" : 11,
+                "example" : "90010558630"
+              },
+              "branchPart" : {
+                "type" : "string"
+              },
+              "customerId" : {
+                "type" : "string"
+              },
+              "nameOnCard" : {
+                "type" : "string",
+                "description" : "nama customer pada kartu ATM",
+                "example" : "ANDI PURNAWAN"
+              },
+              "personExtId" : {
+                "type" : "string",
+                "description" : "nomor CIF"
+              },
+              "productId" : {
+                "type" : "string"
+              },
+              "statusBO" : {
+                "type" : "string"
+              },
+              "statusFO" : {
+                "type" : "string"
+              },
+              "statusId" : {
+                "type" : "string"
+              }
+            }
+          }
+        } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200"
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "genericResponse" : {
+                  "$ref" : "#/definitions/genericResponse"
+                },
+                "RID" : {
+                  "type" : "string"
+                }
+              }
+            }
           }
         }
       }
@@ -285,10 +376,59 @@
     "/cards/accounts/" : {
       "post" : {
         "summary" : "create account (on CMS)",
-        "parameters" : [ ],
+        "consumes" : [ ],
+        "produces" : [ "application/xml" ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "required" : true,
+          "schema" : {
+            "type" : "object",
+            "required" : [ "branch", "branchPart", "currency", "customerId", "no", "station", "type" ],
+            "properties" : {
+              "commonParam" : {
+                "$ref" : "#/definitions/commonParam"
+              },
+              "no" : {
+                "type" : "string"
+              },
+              "type" : {
+                "type" : "string",
+                "description" : "tipe account",
+                "example" : "CASA"
+              },
+              "branchPart" : {
+                "type" : "string"
+              },
+              "currency" : {
+                "type" : "string",
+                "description" : "mata uang",
+                "maxLength" : 3,
+                "example" : "IDR"
+              },
+              "customerId" : {
+                "type" : "string"
+              },
+              "station" : {
+                "type" : "string"
+              },
+              "branch" : {
+                "type" : "string"
+              }
+            }
+          }
+        } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200"
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "genericResponse" : {
+                  "$ref" : "#/definitions/genericResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -307,10 +447,69 @@
     "/cards/linkage/" : {
       "post" : {
         "summary" : "link card to account",
-        "parameters" : [ ],
+        "description" : "Service ini untuk melakukan linking kartu ke account customer",
+        "consumes" : [ ],
+        "produces" : [ "application/xml" ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "required" : true,
+          "schema" : {
+            "type" : "object",
+            "required" : [ "accountNo", "cardExtId", "cvc", "pinBlock" ],
+            "properties" : {
+              "commonparam" : {
+                "$ref" : "#/definitions/commonParam"
+              },
+              "accountNo" : {
+                "type" : "string",
+                "description" : "nomor account",
+                "maxLength" : 11,
+                "example" : "90010558630"
+              },
+              "cardExtId" : {
+                "type" : "string",
+                "description" : "nomor kartu ATM",
+                "maxLength" : 16,
+                "example" : "4661601002835567"
+              },
+              "cvc" : {
+                "type" : "string",
+                "description" : "kode cvc",
+                "maxLength" : 3,
+                "example" : "123"
+              },
+              "guid" : {
+                "type" : "string",
+                "description" : "kode guid",
+                "example" : "a2c19971-9550-49a0-ab87-981d3eaa10ee"
+              },
+              "pinBlock" : {
+                "type" : "string",
+                "description" : "kode PIN",
+                "maxLength" : 6,
+                "example" : "123456"
+              }
+            }
+          }
+        } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200"
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "genericResponse" : {
+                  "$ref" : "#/definitions/genericResponse"
+                },
+                "requestId" : {
+                  "type" : "string"
+                },
+                "RID" : {
+                  "type" : "string"
+                }
+              }
+            }
           }
         }
       }
@@ -318,10 +517,117 @@
     "/cards/cif/{cif-no}" : {
       "get" : {
         "summary" : "get list of card by CIF no",
-        "parameters" : [ ],
+        "description" : "Service ini untuk mendapatkan informasi mengenai list kartu berdasarkan no CIF",
+        "produces" : [ "application/xml" ],
+        "parameters" : [ {
+          "name" : "commonParam",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "description" : "commonParam"
+        }, {
+          "name" : "cif",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "description" : "nomor CIF",
+          "x-example" : "17866021"
+        } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200"
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "genericResponse" : {
+                  "$ref" : "#/definitions/genericResponse"
+                },
+                "cards" : {
+                  "type" : "object",
+                  "properties" : {
+                    "accountNo" : {
+                      "type" : "string",
+                      "description" : "nomor account",
+                      "maxLength" : 11,
+                      "example" : "90010558630"
+                    },
+                    "cardType" : {
+                      "type" : "string",
+                      "description" : "DEBIT"
+                    },
+                    "expDate" : {
+                      "type" : "string",
+                      "description" : "tanggal kadaluarsa kartu"
+                    },
+                    "guid" : {
+                      "type" : "string",
+                      "description" : "kode guid",
+                      "example" : "a2c19971-9550-49a0-ab87-981d3eaa10ee"
+                    },
+                    "nameOnCard" : {
+                      "type" : "string",
+                      "description" : "nama pada kartu ATM",
+                      "example" : "ANDI PURNAWAN"
+                    },
+                    "pan" : {
+                      "type" : "string"
+                    },
+                    "statusId" : {
+                      "type" : "string"
+                    },
+                    "cardExtId" : {
+                      "type" : "string",
+                      "description" : "nomor kartu",
+                      "maxLength" : 16,
+                      "example" : "4661601002835567"
+                    },
+                    "creationSysdate" : {
+                      "type" : "string"
+                    },
+                    "modificationSysdate" : {
+                      "type" : "string"
+                    },
+                    "accountLimits" : {
+                      "type" : "object",
+                      "properties" : {
+                        "limitId" : {
+                          "type" : "string"
+                        },
+                        "max" : {
+                          "type" : "string"
+                        },
+                        "current" : {
+                          "type" : "string"
+                        },
+                        "periodType" : {
+                          "type" : "string"
+                        },
+                        "period" : {
+                          "type" : "string"
+                        }
+                      }
+                    },
+                    "productLimits" : {
+                      "type" : "object",
+                      "properties" : {
+                        "limitId" : {
+                          "type" : "string"
+                        },
+                        "max" : {
+                          "type" : "string"
+                        },
+                        "periodType" : {
+                          "type" : "string"
+                        },
+                        "period" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -335,10 +641,85 @@
     "/cards/accounts/{account-no}" : {
       "get" : {
         "summary" : "get list of card by account no",
-        "parameters" : [ ],
+        "description" : "Service ini untuk mendapatkan informasi mengenai list kartu berdasarkan no account",
+        "parameters" : [ {
+          "name" : "commonParam",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "description" : "commonParam"
+        }, {
+          "name" : "accountNo",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "description" : "nomor account",
+          "maxLength" : 11,
+          "x-example" : "90010558630"
+        }, {
+          "name" : "Branch",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "Station",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200"
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "genericResponse" : {
+                  "$ref" : "#/definitions/genericResponse"
+                },
+                "cardList" : {
+                  "type" : "object",
+                  "properties" : {
+                    "accountNo" : {
+                      "type" : "string",
+                      "description" : "nomor account",
+                      "maxLength" : 11,
+                      "example" : "90010558630"
+                    },
+                    "cardType" : {
+                      "type" : "string",
+                      "description" : "jenis kartu customer",
+                      "example" : "DEBIT"
+                    },
+                    "expDate" : {
+                      "type" : "string",
+                      "description" : "tanggal kadaluarsa kartu"
+                    },
+                    "guid" : {
+                      "type" : "string",
+                      "description" : "kode guid",
+                      "example" : "a2c19971-9550-49a0-ab87-981d3eaa10ee"
+                    },
+                    "nameOnCard" : {
+                      "type" : "string",
+                      "description" : "nama pada kartu ATM",
+                      "example" : "ANDI PURNAWAN"
+                    },
+                    "pan" : {
+                      "type" : "string"
+                    },
+                    "statusId" : {
+                      "type" : "string"
+                    },
+                    "cardExtId" : {
+                      "type" : "string",
+                      "description" : "nomor kartu",
+                      "maxLength" : 16,
+                      "example" : "4661601002835567"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -352,10 +733,119 @@
     "/cards/ext-id/{ext-id}" : {
       "get" : {
         "summary" : "get list of card by external id",
-        "parameters" : [ ],
+        "parameters" : [ {
+          "name" : "commonParam",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "description" : "commonParam"
+        }, {
+          "name" : "personExtId",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "onlyShowThisCardProductID",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200"
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "genericResponse" : {
+                  "$ref" : "#/definitions/genericResponse"
+                },
+                "cards" : {
+                  "type" : "object",
+                  "properties" : {
+                    "accountNo" : {
+                      "type" : "string",
+                      "description" : "nomor account",
+                      "maxLength" : 11,
+                      "example" : "90010558630"
+                    },
+                    "cardType" : {
+                      "type" : "string",
+                      "description" : "jenis kartu",
+                      "example" : "DEBIT"
+                    },
+                    "expDate" : {
+                      "type" : "string",
+                      "description" : "tanggal kadaluarsa kartu"
+                    },
+                    "guid" : {
+                      "type" : "string",
+                      "description" : "kode guid",
+                      "example" : "a2c19971-9550-49a0-ab87-981d3eaa10ee"
+                    },
+                    "nameOnCard" : {
+                      "type" : "string",
+                      "description" : "nama pada kartu",
+                      "example" : "ANDI PURAWAN"
+                    },
+                    "pan" : {
+                      "type" : "string"
+                    },
+                    "statusId" : {
+                      "type" : "string"
+                    },
+                    "cardExtid" : {
+                      "type" : "string",
+                      "description" : "nomor kartu",
+                      "maxLength" : 16,
+                      "example" : "4661601002835567"
+                    },
+                    "creationSysDate" : {
+                      "type" : "string"
+                    },
+                    "modificationSysDate" : {
+                      "type" : "string"
+                    },
+                    "accountLimits" : {
+                      "type" : "object",
+                      "properties" : {
+                        "limitId" : {
+                          "type" : "string"
+                        },
+                        "max" : {
+                          "type" : "string"
+                        },
+                        "current" : {
+                          "type" : "string"
+                        },
+                        "periodType" : {
+                          "type" : "string"
+                        },
+                        "period" : {
+                          "type" : "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "productLimit" : {
+                  "type" : "object",
+                  "properties" : {
+                    "limitId" : {
+                      "type" : "string"
+                    },
+                    "max" : {
+                      "type" : "string"
+                    },
+                    "periodType" : {
+                      "type" : "string"
+                    },
+                    "period" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -369,10 +859,73 @@
     "/cards/ext-id/{ext-id}/status" : {
       "put" : {
         "summary" : "update card status",
-        "parameters" : [ ],
+        "description" : "Service ini untuk mengupdate status kartu (Active/Blocked)",
+        "parameters" : [ {
+          "name" : "commomParam",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "description" : "commonParam"
+        }, {
+          "name" : "branch",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "station",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "extId",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "guid",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "mbr",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "onlineProcessing",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "statusBO",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "statusFO",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "statusId",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200"
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "genericResponse" : {
+                  "$ref" : "#/definitions/genericResponse"
+                },
+                "RID" : {
+                  "type" : "string"
+                }
+              }
+            }
           }
         }
       },
@@ -386,6 +939,7 @@
     "/cards/ext-id/{ext-id}/limit" : {
       "put" : {
         "summary" : "update card limit",
+        "description" : "Service ini untuk mengupdate limit pada kartu",
         "parameters" : [ ],
         "responses" : {
           "200" : {
@@ -403,10 +957,68 @@
     "/cards/ext-id/{ext-id}/activation" : {
       "post" : {
         "summary" : "activate card",
-        "parameters" : [ ],
+        "description" : "Service ini untuk melakukan aktivasi kartu baru",
+        "consumes" : [ ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "required" : true,
+          "schema" : {
+            "type" : "object",
+            "required" : [ "accountNo", "cardExtId", "cvc", "pinBlock" ],
+            "properties" : {
+              "commonParam" : {
+                "$ref" : "#/definitions/commonParam"
+              },
+              "accountNo" : {
+                "type" : "string",
+                "description" : "Informasi nomor account",
+                "maxLength" : 11,
+                "example" : "90010558630"
+              },
+              "cardExtId" : {
+                "type" : "string",
+                "description" : "nomor kartu",
+                "maxLength" : 16,
+                "example" : "4661601002835567"
+              },
+              "cvc" : {
+                "type" : "string",
+                "description" : "kode cvc",
+                "maxLength" : 3,
+                "example" : "123"
+              },
+              "guid" : {
+                "type" : "string",
+                "description" : "kode guid",
+                "example" : "a2c19971-9550-49a0-ab87-981d3eaa10ee"
+              },
+              "pinBlock" : {
+                "type" : "string",
+                "description" : "kode pin kartu ATM",
+                "maxLength" : 6,
+                "example" : "123456"
+              }
+            }
+          }
+        } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200"
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "genericResponse" : {
+                  "$ref" : "#/definitions/genericResponse"
+                },
+                "requestId" : {
+                  "type" : "string"
+                },
+                "RID" : {
+                  "type" : "string"
+                }
+              }
+            }
           }
         }
       },
@@ -420,19 +1032,138 @@
     "/cards/ext-id/{ext-id}/pin" : {
       "post" : {
         "summary" : "set card PIN",
-        "parameters" : [ ],
+        "consumes" : [ ],
+        "produces" : [ "application/xml" ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "required" : true,
+          "schema" : {
+            "type" : "object",
+            "required" : [ "accountNo", "cardExtId", "cvc", "expDate", "pinBlock" ],
+            "properties" : {
+              "commonParam" : {
+                "$ref" : "#/definitions/commonParam"
+              },
+              "accountNo" : {
+                "type" : "string",
+                "description" : "nomor rekening",
+                "maxLength" : 11,
+                "example" : "90010558630"
+              },
+              "cardExtId" : {
+                "type" : "string",
+                "description" : "nomor kartu",
+                "maxLength" : 16,
+                "example" : "4661601002835567"
+              },
+              "cvc" : {
+                "type" : "string",
+                "description" : "kode cvc",
+                "maxLength" : 3,
+                "example" : "123"
+              },
+              "expDate" : {
+                "type" : "string",
+                "description" : "tanggal kadaluarsa kartu ATM"
+              },
+              "guid" : {
+                "type" : "string",
+                "description" : "kode guid",
+                "example" : "a2c19971-9550-49a0-ab87-981d3eaa10ee"
+              },
+              "pinBlock" : {
+                "type" : "string",
+                "description" : "kode PIN",
+                "maxLength" : 6,
+                "example" : "123456"
+              },
+              "track2" : {
+                "type" : "string"
+              }
+            }
+          }
+        } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200"
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "genericResponse" : {
+                  "$ref" : "#/definitions/genericResponse"
+                }
+              }
+            }
           }
         }
       },
       "put" : {
         "summary" : "change card PIN",
-        "parameters" : [ ],
+        "description" : "Service ini untuk mengganti PIN kartu",
+        "parameters" : [ {
+          "name" : "commonParam",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "description" : "commonParam"
+        }, {
+          "name" : "cardExtId",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "description" : "nomor kartu",
+          "maxLength" : 16,
+          "x-example" : "4661601002835567"
+        }, {
+          "name" : "cvc",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "description" : "kode cvc",
+          "maxLength" : 3,
+          "x-example" : "123"
+        }, {
+          "name" : "guid",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "description" : "kode guid",
+          "x-example" : "a2c19971-9550-49a0-ab87-981d3eaa10ee"
+        }, {
+          "name" : "pinBlockCurrent",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "description" : "kode pin lama",
+          "maxLength" : 6,
+          "x-example" : "123456"
+        }, {
+          "name" : "pinBlockNew",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "description" : "kode pin baru",
+          "maxLength" : 6,
+          "x-example" : "123456"
+        } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200"
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "genericResponse" : {
+                  "$ref" : "#/definitions/genericResponse"
+                },
+                "requestId" : {
+                  "type" : "string"
+                },
+                "RID" : {
+                  "type" : "string"
+                }
+              }
+            }
           }
         }
       },
@@ -446,10 +1177,53 @@
     "/cards/ext-id/{ext-id}/reset-pin" : {
       "post" : {
         "summary" : "reset card PIN",
-        "parameters" : [ ],
+        "parameters" : [ {
+          "name" : "commonParam",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "description" : "commonParam"
+        }, {
+          "name" : "accountNo",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "description" : "nomor account",
+          "maxLength" : 11,
+          "x-example" : "90010558630"
+        }, {
+          "name" : "cardExtId",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "description" : "nomor kartu",
+          "maxLength" : 16,
+          "x-example" : "4661601002835567"
+        }, {
+          "name" : "cvc",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "description" : "kode cvc",
+          "maxLength" : 3,
+          "x-example" : "123"
+        }, {
+          "name" : "track2",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200"
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "genericResponse" : {
+                  "$ref" : "#/definitions/genericResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -478,18 +1252,122 @@
       } ]
     },
     "/bill-payments/{bill-id}" : {
-      "get" : {
-        "summary" : "get inquiry bill detail by bill-id",
-        "parameters" : [ ],
-        "responses" : {
-          "200" : {
-            "description" : "Status 200"
-          }
-        }
-      },
       "post" : {
         "summary" : "posting payment bill",
         "description" : "Middleware will orchestrate the process of debit/credit",
+        "consumes" : [ ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "required" : true,
+          "schema" : {
+            "type" : "object",
+            "required" : [ "additionalData1", "aggregatorCode", "institutionCode", "sourceAccountNo" ],
+            "properties" : {
+              "commonParam" : {
+                "$ref" : "#/definitions/commonParam"
+              },
+              "sourceAccountNo" : {
+                "type" : "string",
+                "description" : "nomor rekening asal"
+              },
+              "aggregatorCode" : {
+                "type" : "string",
+                "description" : "kode aggregator",
+                "example" : "FINNET"
+              },
+              "institutionCode" : {
+                "type" : "string",
+                "description" : "kode institusi",
+                "example" : "001001"
+              },
+              "customerName" : {
+                "type" : "string",
+                "description" : "nama customer",
+                "example" : "ANDI PURNAWAN"
+              },
+              "narrative" : {
+                "type" : "string"
+              },
+              "additionalData1" : {
+                "type" : "string"
+              },
+              "additionalData2" : {
+                "type" : "string"
+              },
+              "additionalData3" : {
+                "type" : "string"
+              },
+              "additionalData4" : {
+                "type" : "string"
+              },
+              "unstructureData" : {
+                "type" : "string"
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "genericResponse" : {
+                  "$ref" : "#/definitions/genericResponse"
+                },
+                "sourceAccountNo" : {
+                  "type" : "string"
+                },
+                "aggregatorCode" : {
+                  "type" : "string",
+                  "description" : "kode aggregator",
+                  "example" : "FINNET"
+                },
+                "institutionCode" : {
+                  "type" : "string",
+                  "description" : "kode institusi",
+                  "example" : "001001"
+                },
+                "customerName" : {
+                  "type" : "string",
+                  "description" : "nama customer",
+                  "example" : "ANDI PURNAWAN"
+                },
+                "narrative" : {
+                  "type" : "string"
+                },
+                "additionalData1" : {
+                  "type" : "string"
+                },
+                "additionalData2" : {
+                  "type" : "string"
+                },
+                "additionalData3" : {
+                  "type" : "string"
+                },
+                "additionalData4" : {
+                  "type" : "string"
+                },
+                "unstructureData" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "bill-id",
+        "in" : "path",
+        "required" : true,
+        "type" : "string"
+      } ]
+    },
+    "/bill-payments/{bill-id}/status" : {
+      "get" : {
+        "summary" : "get posting status by bill-id",
+        "description" : "only applied for PLN biller\n",
         "parameters" : [ ],
         "responses" : {
           "200" : {
@@ -504,19 +1382,193 @@
         "type" : "string"
       } ]
     },
-    "/bill-payments/{bill-id}/status" : {
+    "/bill-payments/inquiry/{bill-id}" : {
       "get" : {
-        "summary" : "get posting status by bill-id",
-        "description" : "only applied for PLN biller",
-        "parameters" : [ ],
+        "summary" : "get inquiry bill detail by bill",
+        "parameters" : [ {
+          "name" : "commonParam",
+          "in" : "header",
+          "required" : false,
+          "type" : "string",
+          "description" : "commonParam"
+        }, {
+          "name" : "aggregatorCode",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "description" : "kode aggregator",
+          "x-example" : "FINNET"
+        }, {
+          "name" : "institutionCode",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "description" : "kode institusi",
+          "maxLength" : 6,
+          "x-example" : "001001"
+        }, {
+          "name" : "additionalData",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "description" : "additional data",
+          "x-example" : "0131626112373"
+        } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200"
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "genericResponse" : {
+                  "$ref" : "#/definitions/genericResponse"
+                },
+                "customerName" : {
+                  "type" : "string",
+                  "description" : "nama customer",
+                  "example" : "LINAWATI"
+                },
+                "billAmount" : {
+                  "type" : "string",
+                  "description" : "jumlah bill",
+                  "example" : "55000"
+                },
+                "additionalData1" : {
+                  "type" : "string",
+                  "description" : "additional data",
+                  "example" : "01316261123730300061604A 55000 LINAWATI ||TEIPC2"
+                },
+                "additionalData2" : {
+                  "type" : "string"
+                },
+                "additionalData3" : {
+                  "type" : "string"
+                },
+                "additionalData4" : {
+                  "type" : "string"
+                },
+                "unstructureData" : {
+                  "type" : "string",
+                  "example" : "01316261123730300061604A 55000 LINAWATI ||TEIPC2"
+                }
+              }
+            }
           }
         }
       },
       "parameters" : [ {
         "name" : "bill-id",
+        "in" : "path",
+        "required" : true,
+        "type" : "string"
+      } ]
+    },
+    "/billpayment/forecast?aggregatorCode={aggregatorCode}&institutionCode={institutionCode}&additionalData={additionalData}" : {
+      "get" : {
+        "summary" : "get inquiry bill detail by",
+        "description" : "Service ini untuk inquiry/forecast billpayment yang mana terdiri dari \n- Finnet\n- Artajasa\n- Mitracomm\n- Jatelindo",
+        "parameters" : [ {
+          "name" : "aggregatorCode",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "FINNET"
+        }, {
+          "name" : "institutionCode",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "001001"
+        }, {
+          "name" : "additionalData",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "0131626112373"
+        }, {
+          "name" : "Content-Type",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "application/json"
+        }, {
+          "name" : "X-Reference-No",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "123456789012"
+        }, {
+          "name" : "X-Transmission-Date-Time",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "2017-08-21T10:51:33.852Z"
+        }, {
+          "name" : "X-Node",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "JENIUS 2.0"
+        }, {
+          "name" : "X-Channel-ID",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "6017"
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "123456"
+        }, {
+          "name" : "X-Pan",
+          "in" : "header",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "12345678"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "responseCode" : {
+                  "type" : "string"
+                },
+                "responseDesc" : {
+                  "type" : "string"
+                },
+                "customerName" : {
+                  "type" : "string"
+                },
+                "billAmount" : {
+                  "type" : "string"
+                },
+                "additionalData1" : {
+                  "type" : "string"
+                },
+                "unstructureData" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "aggregatorCode",
+        "in" : "path",
+        "required" : true,
+        "type" : "string"
+      }, {
+        "name" : "institutionCode",
+        "in" : "path",
+        "required" : true,
+        "type" : "string"
+      }, {
+        "name" : "additionalData",
         "in" : "path",
         "required" : true,
         "type" : "string"
@@ -588,10 +1640,88 @@
       "post" : {
         "summary" : "post fund transfer",
         "description" : "transfer from EQ to Equation, WOW and other banks",
-        "parameters" : [ ],
+        "consumes" : [ ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "required" : true,
+          "schema" : {
+            "type" : "object",
+            "required" : [ "cardExtId", "destinationAccountCode", "destinationAccountName", "destinationBankCode", "sourceAccountNo" ],
+            "properties" : {
+              "commonParam" : {
+                "$ref" : "#/definitions/commonParam"
+              },
+              "user" : {
+                "type" : "string"
+              },
+              "sourceAccountNo" : {
+                "type" : "string",
+                "description" : "nomor rekening asal",
+                "maxLength" : 11,
+                "example" : "90010558630"
+              },
+              "destinationBankCode" : {
+                "type" : "string",
+                "description" : "kode bank tujuan transfer",
+                "maxLength" : 3,
+                "example" : "007"
+              },
+              "destinationAccountCode" : {
+                "type" : "string",
+                "description" : "nomor rekening tujuan",
+                "maxLength" : 11,
+                "example" : "90010558631"
+              },
+              "destinationAccountName" : {
+                "type" : "string",
+                "description" : "nama tujuan transfer",
+                "example" : "ANDI"
+              },
+              "cardExtId" : {
+                "type" : "string",
+                "description" : "nomor kartu",
+                "maxLength" : 16,
+                "example" : "4661601002835567"
+              },
+              "additionalData1" : {
+                "type" : "string"
+              },
+              "additionalData2" : {
+                "type" : "string"
+              },
+              "additionalData3" : {
+                "type" : "string"
+              },
+              "additionalData4" : {
+                "type" : "string"
+              },
+              "exchangeRate" : {
+                "type" : "string"
+              },
+              "costCentre" : {
+                "type" : "string"
+              },
+              "debetTransactionCode" : {
+                "type" : "string"
+              },
+              "creditTransactionCode" : {
+                "type" : "string"
+              }
+            }
+          }
+        } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200"
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "genericReponse" : {
+                  "$ref" : "#/definitions/genericResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -603,16 +1733,6 @@
       } ]
     },
     "/transactions/eq/debit/{account-no}" : {
-      "post" : {
-        "summary" : "debit account EQ",
-        "description" : "processing code will determined the credit account & it will passed in request body",
-        "parameters" : [ ],
-        "responses" : {
-          "200" : {
-            "description" : "Status 200"
-          }
-        }
-      },
       "parameters" : [ {
         "name" : "account-no",
         "in" : "path",
@@ -621,16 +1741,6 @@
       } ]
     },
     "/transactions/eq/credit/{account-no}" : {
-      "post" : {
-        "summary" : "credit account EQ",
-        "description" : "processing code will determined the debit account & it will passed in request body",
-        "parameters" : [ ],
-        "responses" : {
-          "200" : {
-            "description" : "Status 200"
-          }
-        }
-      },
       "parameters" : [ {
         "name" : "account-no",
         "in" : "path",
@@ -1203,6 +2313,94 @@
         "RCHG" : {
           "type" : "string",
           "description" : "Recalculate Charge - Y / N"
+        }
+      }
+    },
+    "Response Code" : {
+      "type" : "object",
+      "properties" : {
+        "response_code" : {
+          "type" : "string"
+        },
+        "message" : {
+          "type" : "string"
+        }
+      }
+    },
+    "commonParam" : {
+      "type" : "object",
+      "required" : [ "channelId", "node", "referenceNo", "transmissionDateTime" ],
+      "properties" : {
+        "pan" : {
+          "type" : "string"
+        },
+        "processingCode" : {
+          "type" : "string",
+          "example" : "250000"
+        },
+        "channelId" : {
+          "type" : "string"
+        },
+        "channelType" : {
+          "type" : "string"
+        },
+        "node" : {
+          "type" : "string",
+          "description" : "channel node",
+          "example" : "FES"
+        },
+        "currencyAmount" : {
+          "type" : "string"
+        },
+        "amount" : {
+          "type" : "string"
+        },
+        "currencyfee" : {
+          "type" : "string"
+        },
+        "fee" : {
+          "type" : "string"
+        },
+        "transmissionDateTime" : {
+          "type" : "string",
+          "description" : "log waktu transaksi",
+          "example" : "2015-12-01 14:20:25.274"
+        },
+        "requestId" : {
+          "type" : "string"
+        },
+        "acqId" : {
+          "type" : "string"
+        },
+        "referenceNo" : {
+          "type" : "string",
+          "description" : "transaksi ID",
+          "example" : "1501061934942P110"
+        },
+        "terminalName" : {
+          "type" : "string"
+        },
+        "original" : {
+          "type" : "string"
+        },
+        "userId" : {
+          "type" : "string"
+        }
+      },
+      "description" : "commonParam"
+    },
+    "genericResponse" : {
+      "type" : "object",
+      "properties" : {
+        "responseCode" : {
+          "type" : "string",
+          "description" : "kode response",
+          "example" : "00"
+        },
+        "responseDesc" : {
+          "type" : "string",
+          "description" : "keterangan response",
+          "example" : "Success"
         }
       }
     }
