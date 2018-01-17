@@ -1,0 +1,158 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "No description",
+    "version" : "1.0.0",
+    "title" : "Aldiracita RDN management'",
+    "contact" : { }
+  },
+  "host" : "10.39.6.5:1010",
+  "schemes" : [ "http" ],
+  "consumes" : [ "application/json" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/createAccount" : {
+      "post" : {
+        "summary" : "Create Bank Sinarmas RDN",
+        "consumes" : [ ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "required" : true,
+          "schema" : {
+            "type" : "object",
+            "required" : [ "action", "agencyName", "birthIncorpDate", "branch", "cityMunicipal", "expDateKTP", "fundPurpose", "gender", "legalIDNo", "name1", "peID", "placeBirth", "postalCode", "salaryRange", "shortName", "sid", "srcOfFund", "sre", "street", "telMobile" ],
+            "properties" : {
+              "action" : {
+                "type" : "string",
+                "default" : "createAccount",
+                "maxLength" : 30
+              },
+              "branch" : {
+                "type" : "string",
+                "maxLength" : 30,
+                "example" : "0204"
+              },
+              "agencyName" : {
+                "type" : "string",
+                "description" : "alphabet only, UPPERCASE",
+                "maxLength" : 30,
+                "example" : "PHILLIP"
+              },
+              "shortName" : {
+                "type" : "string",
+                "description" : "alphabet only, UPPERCASE",
+                "maxLength" : 30,
+                "example" : "SEBUT SAJA BUNGA"
+              },
+              "placeBirth" : {
+                "type" : "string",
+                "description" : "alphabet only, UPPERCASE",
+                "maxLength" : 30,
+                "example" : "BANDUNG"
+              },
+              "birthIncorpDate" : {
+                "type" : "string",
+                "description" : "format YYYYMMDD",
+                "maxLength" : 30,
+                "example" : "19990624"
+              },
+              "gender" : {
+                "type" : "string",
+                "description" : "M / F",
+                "maxLength" : 30,
+                "example" : "M"
+              },
+              "name1" : {
+                "type" : "string",
+                "description" : "alphabet only, UPPERCASE",
+                "maxLength" : 30,
+                "example" : "MAWAR"
+              },
+              "street" : {
+                "type" : "string",
+                "description" : "alphanumeric, UPPERCASE",
+                "maxLength" : 30,
+                "example" : "JL. ABC APRT-10"
+              },
+              "postalCode" : {
+                "type" : "string",
+                "description" : "numeric, no space",
+                "maxLength" : 30,
+                "example" : "63129"
+              },
+              "cityMunicipal" : {
+                "type" : "string",
+                "description" : "Kota",
+                "maxLength" : 30,
+                "example" : "MANGUHARJO"
+              },
+              "legalIDNo" : {
+                "type" : "string",
+                "description" : "Nomor Identitas/ KTP",
+                "maxLength" : 30,
+                "example" : "1250059062490000"
+              },
+              "expDateKTP" : {
+                "type" : "string",
+                "description" : "tgl expired KTP, YYYYMMDD",
+                "maxLength" : 30,
+                "example" : "20190624"
+              },
+              "srcOfFund" : {
+                "type" : "string",
+                "description" : "keterangan sumber dana",
+                "maxLength" : 30,
+                "example" : "PENGHASILAN"
+              },
+              "fundPurpose" : {
+                "type" : "string",
+                "description" : "keterangan tujuan pembukaan",
+                "maxLength" : 30,
+                "example" : "SIMPANAN"
+              },
+              "salaryRange" : {
+                "type" : "string",
+                "description" : "penghasilan:\n1 - Below IDR 5.000.000 \n2 - IDR 5.000.001 to IDR 10.000.000 \n3 - IDR 10.000.001 to IDR 25.000.000 \n4 - IDR 25.000.001 to IDR 50.000.000 \n5 - IDR 50.000.001 to IDR 100.000.000 \n6 - Above IDR 100.000.000",
+                "enum" : [ "1", "2", "3", "4", "5", "6" ],
+                "maxLength" : 30,
+                "example" : "5"
+              },
+              "telHome" : {
+                "type" : "string"
+              },
+              "telWork" : {
+                "type" : "string"
+              },
+              "telMobile" : {
+                "type" : "string",
+                "maxLength" : 30
+              },
+              "sid" : {
+                "type" : "string",
+                "description" : "Nomor SID",
+                "maxLength" : 30,
+                "example" : "IDD010238374293"
+              },
+              "sre" : {
+                "type" : "string",
+                "maxLength" : 30,
+                "example" : "KK001PL1000124"
+              },
+              "peID" : {
+                "type" : "string",
+                "default" : "KK001",
+                "maxLength" : 30
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    }
+  }
+}
